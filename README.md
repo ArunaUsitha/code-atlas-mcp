@@ -42,9 +42,16 @@ It also embeds an interactive **3D Graph Visualization UI** to help you inspect 
 To build the server binary locally (ensuring CGO is enabled since tree-sitter bindings require C compilation):
 
 **Windows (PowerShell):**
+
+You can run the bundled build script which automatically configures the local GCC path and builds the server binary:
+```powershell
+./build.ps1
+```
+
+Or manually run the setup in your terminal:
 ```powershell
 # 1. Add the bundled GCC compiler to your PATH for this terminal session
-$env:PATH = "$(Get-Item .).FullName\.gcc\w64devkit\bin;" + $env:PATH
+$env:PATH = "$PWD\.gcc\w64devkit\bin;$env:PATH"
 
 # 2. Enable CGO and compile the binary
 $env:CGO_ENABLED = "1"
