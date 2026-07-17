@@ -9,7 +9,7 @@ CYAN='\033[0;36m'
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 YELLOW='\033[0;33m'
-NC='\033[0m' # No Color
+NC='\033[0m' # No Colo
 
 echo -e "${CYAN}Checking build prerequisites...${NC}"
 
@@ -39,7 +39,7 @@ echo -e "Found GCC compiler: $(gcc --version | head -n 1)"
 echo -e "${CYAN}Building CodeAtlas MCP Server...${NC}"
 
 # Enable CGO and build the server binary
-CGO_ENABLED=1 go build -o cbm-server ./cmd/cbm-server
+CGO_ENABLED=1 go build -o cbm-server ./cmd/cbm-serve
 
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}Build Succeeded! 'cbm-server' is ready.${NC}"
