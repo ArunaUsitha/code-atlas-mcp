@@ -1,0 +1,22 @@
+# Binaries and build artifacts
+cbm-server
+cbm-server.exe
+dist/
+build/
+graph-ui/dist/
+graph-ui/node_modules/
+
+# Local tools and caching
+.gcc/
+.go/
+.gemini/
+
+# Databases and Snapshots
+*.db
+*.db.zst
+*.sqlite
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store
