@@ -62,6 +62,11 @@ func StartServer(ctx *ServerContext) {
 }
 
 func handleRequest(req *JSONRPCRequest) {
+	if req.ID == nil {
+		log.Printf("Received notification: %s", req.Method)
+		return
+	}
+
 	switch req.Method {
 	case "initialize":
 		sendResponse(req.ID, map[string]interface{}{

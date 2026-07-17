@@ -44,10 +44,10 @@ func ParseFile(filePath string, langType string) ([]Symbol, error) {
 		queryStr = `
 			(function_declaration
 				name: (identifier) @func.name
-				parameter_list: (parameter_list) @func.params) @func.def
+				parameters: (parameter_list) @func.params) @func.def
 			(method_declaration
 				name: (field_identifier) @func.name
-				parameter_list: (parameter_list) @func.params) @func.def
+				parameters: (parameter_list) @func.params) @func.def
 			(type_spec
 				name: (type_identifier) @class.name
 				type: (struct_type)) @class.def

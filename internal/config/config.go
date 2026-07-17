@@ -18,7 +18,7 @@ func LoadConfig() *Config {
 		home = "."
 	}
 
-	defaultDBDir := filepath.Join(home, ".cache", "cbm-go")
+	defaultDBDir := filepath.Join(home, ".cache", "codebase-memory-mcp")
 	_ = os.MkdirAll(defaultDBDir, 0755)
 	defaultDBPath := filepath.Join(defaultDBDir, "graph.db")
 
