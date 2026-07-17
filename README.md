@@ -58,10 +58,53 @@ $env:CGO_ENABLED = "1"
 go build -o cbm-server.exe ./cmd/cbm-server
 ```
 
-**Linux / macOS:**
+**Linux / WSL (Windows Subsystem for Linux) / macOS:**
+
+You can build the server inside a WSL or Linux environment using the `build.sh` script, which will verify your build prerequisites:
+```bash
+chmod +x build.sh
+./build.sh
+```
+
+Or compile manually:
 ```bash
 CGO_ENABLED=1 go build -o cbm-server ./cmd/cbm-server
 ```
+
+*Note: Building requires `gcc` (installed via `sudo apt-get install build-essential` on Ubuntu/Debian) for CGO tree-sitter parsing.*
+
+#### Setting up ONNX Runtime for Local Semantic Embeddings on Linux/WSL:
+If you want to use local semantic search, the server requires the ONNX Runtime dynamic library file (`libonnxruntime.so`). 
+To download and extract the required version to your workspace:
+```bash
+# 1. Download official release
+wget https://github.com/microsoft/onnxruntime/releases/download/v1.18.0/onnxruntime-linux-x64-1.18.0.tgz
+
+# 2. Extract files
+tar -zxvf onnxruntime-linux-x64-1.18.0.tgz
+
+# 3. Copy the dynamic library to the project root directory
+cp onnxruntime-linux-x64-1.18.0/lib/libonnxruntime.so.1.18.0 ./libonnxruntime.so
+
+# 4. Clean up temporary files
+rm -rf onnxruntime-linux-x64-1.18.0 onnxruntime-linux-x64-1.18.0.tgz
+```
+*If `libonnxruntime.so` is not found, the server automatically and gracefully falls back to deterministic mock embeddings.*
+
+#### Build Output & Assets Packaging:
+- **Binary Output Location:** The compiled server binary is placed in the project root directory:
+  - [cbm-server.exe](file:///d:/Projects/codebase-memory-mcp/cbm-server.exe) on Windows.
+  - [cbm-server](file:///d:/Projects/codebase-memory-mcp/cbm-server) on Linux/WSL/macOS.
+- **Embedded Frontend UI:** The compiled server binary embeds all React static frontend assets located in [internal/ui/dist](file:///d:/Projects/codebase-memory-mcp/internal/ui/dist) using Go's `embed` package. You don't need a separate static file server to run or view the UI.
+- **Modifying & Rebuilding the UI:** 
+  If you modify any frontend code in the [graph-ui/](file:///d:/Projects/codebase-memory-mcp/graph-ui) directory, you must rebuild the UI assets before recompiling the Go server:
+  ```bash
+  cd graph-ui
+  npm install
+  npm run build
+  cd ..
+  # Now recompile the Go server using build.ps1 or build.sh
+  ```
 
 ---
 

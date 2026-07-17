@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"runtime"
 	"strings"
 
 	ort "github.com/yalue/onnxruntime_go"
@@ -22,7 +23,18 @@ func NewLocalEmbedder(modelPath string, dllPath string) (*LocalEmbedder, error) 
 	}
 
 	if dllPath == "" {
-		dllPath = "onnxruntime.dll" // Default for Windows
+		switch runtime.GOOS {
+		case "windows":
+			dllPath = "onnxruntime.dll"
+		case "darwin":
+			dllPath = "libonnxruntime.dylib"
+		default: // linux, freebsd, etc. (WSL falls under linux)
+			dllPath = "libonnxruntime.so"
+			// If libonnxruntime.so is present in the current directory, use it directly
+			if _, err := os.Stat("libonnxruntime.so"); err == nil {
+				dllPath = "./libonnxruntime.so"
+			}
+		}
 	}
 
 	ort.SetSharedLibraryPath(dllPath)
