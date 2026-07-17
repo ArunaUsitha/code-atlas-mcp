@@ -43,10 +43,13 @@ To build the server binary locally (ensuring CGO is enabled since tree-sitter bi
 
 **Windows (PowerShell):**
 ```powershell
-$env:CGO_ENABLED="1"
+# 1. Add the bundled GCC compiler to your PATH for this terminal session
+$env:PATH = "$(Get-Item .).FullName\.gcc\w64devkit\bin;" + $env:PATH
+
+# 2. Enable CGO and compile the binary
+$env:CGO_ENABLED = "1"
 go build -o cbm-server.exe ./cmd/cbm-server
 ```
-*(If you need a local GCC compiler, you can reference the path of any local MinGW toolchain in your PATH variable).*
 
 **Linux / macOS:**
 ```bash
