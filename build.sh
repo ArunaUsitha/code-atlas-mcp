@@ -39,7 +39,7 @@ echo -e "Found GCC compiler: $(gcc --version | head -n 1)"
 echo -e "${CYAN}Building CodeAtlas MCP Server...${NC}"
 
 # Enable CGO and build the server binary
-CGO_ENABLED=1 go build -o cbm-server ./cmd/cbm-serve
+CGO_ENABLED=1 go build -o cbm-server ./cmd/cbm-server
 
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}Build Succeeded! 'cbm-server' is ready.${NC}"
